@@ -1,0 +1,43 @@
+---
+interface Props {
+  name: 'megaphone' | 'signal' | 'award' | 'search' | 'bolt' | 'trend' | 'slot' | 'people';
+  size?: number;
+}
+const { name, size = 40 } = Astro.props;
+
+const paths: Record<string, string> = {
+  // Earned Media — megaphone
+  megaphone:
+    'M4 12.5V9.8c0-.9.6-1.7 1.5-1.9L20 4v17l-14.5-3.9A2 2 0 0 1 4 15.2v-2.7Z M8 17.5l1.2 4.5a2 2 0 0 0 3.6.5l1.7-2.7',
+  // Owned Media — broadcast / signal
+  signal:
+    'M7.5 16.5a6 6 0 0 1 0-9 M4.5 19.5a10.5 10.5 0 0 1 0-15 M16.5 7.5a6 6 0 0 1 0 9 M19.5 4.5a10.5 10.5 0 0 1 0 15 M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z',
+  // Accolades — star
+  award: 'M12 3.5l2.6 5.5 6 .7-4.4 4.1 1.2 6-5.4-3-5.4 3 1.2-6-4.4-4.1 6-.7Z',
+  // Audit & assess — search
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z M21 21l-4.8-4.8',
+  // Activate — bolt
+  bolt: 'M13 2 4.5 14h6.5l-1 8L19 10h-6.5l.5-8Z',
+  // Track & adapt — trend line
+  trend: 'M4 17 10 11l4 4 6-8 M14.5 7H20v5.5',
+  // Case study placeholder slot
+  slot: 'M12 3v5.5 M12 15.5V21 M3 12h5.5 M15.5 12H21 M12 12m-3.2 0a3.2 3.2 0 1 0 6.4 0 3.2 3.2 0 1 0-6.4 0',
+  // In-person & community — people
+  people:
+    'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z M3.5 20c.6-3.2 3-5.2 5.5-5.2s4.9 2 5.5 5.2 M16.5 8.3a2.6 2.6 0 1 1 0-5.2 M15 14.3c2.1.2 3.9 2 4.4 4.9',
+};
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <path d={paths[name]} />
+</svg>

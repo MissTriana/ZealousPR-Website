@@ -5,11 +5,12 @@ interface Props {
   path?: string;
   type?: 'website' | 'article';
   extraJsonLd?: Record<string, any>[];
+  canonicalOverride?: string;
 }
 
-const { title, description, path = '/', type = 'website', extraJsonLd = [] } = Astro.props;
+const { title, description, path = '/', type = 'website', extraJsonLd = [], canonicalOverride } = Astro.props;
 const site = Astro.site ?? new URL('https://www.zealouspr.com');
-const canonical = new URL(path, site).toString();
+const canonical = canonicalOverride ?? new URL(path, site).toString();
 const fullTitle = title.includes('Zealous') ? title : `${title} — Zealous`;
 
 const orgJsonLd = {

@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'team');
+const c = page!.data;
+const colors = ['var(--coral)', 'var(--blue)', 'var(--mint-deep)', 'var(--violet)'];
+---
+
+<BaseLayout
+  title={c.seo_title}
+  description={c.seo_description}
+  path="/team/"
+>
+  <section class="section hero-sm">
+    <div class="wrap">
+      <p class="eyebrow">{c.hero_eyebrow}</p>
+      <h1>{c.hero_heading}</h1>
+      <p class="lede">{c.hero_lede}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="team-grid">
+        {c.members.map((m: { name: string; role: string; initials: string; bio: string }, i: number) => (
+          <article class="team-card lift">
+            <div class="team-photo" style={`background:${colors[i % 4]}`}>
+              <span>{m.initials}</span>
+            </div>
+            <h2>{m.name}</h2>
+            <p class="team-role" style={`color:${colors[i % 4]}`}>{m.role}</p>
+            <p class="slate">{m.bio}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark cta-band">
+    <div class="wrap cta-band-inner">
+      <h2>{c.cta_heading}</h2>
+      <p class="lede" style="color:#d9d5c8">{c.cta_lede}</p>
+      <a class="btn btn-primary btn-on-dark" href="/contact/">{c.cta_button}</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-sm { padding-block: clamp(2.5rem, 6vw, 4rem) 1rem; }
+  .hero-sm h1 { margin-block: 0.6rem 1.2rem; max-width: 20ch; }
+
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+  .team-card {
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.75rem;
+  }
+  .team-photo {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .team-photo span {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: #fff;
+  }
+  .team-card h2 { font-size: 1.4rem; margin-bottom: 0.3rem; }
+  .team-role {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.9rem;
+  }
+
+  .cta-band-inner { text-align: center; display: grid; gap: 1.5rem; justify-items: center; max-width: 50ch; margin-inline: auto; }
+
+  @media (max-width: 900px) {
+    .team-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .team-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,38 +1,37 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getSubstackPosts } from '../../lib/substack';
 
-const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = await getSubstackPosts();
 ---
 
 <BaseLayout
-  title="The GEO Nerd — Zealous Blog"
+  title="The GEO Nerd — Newsletter"
   description="PR and GEO thinking from Zealous: how brands earn visibility with journalists, audiences, and AI search engines."
-  path="/blog/"
+  path="/newsletter/"
 >
   <section class="section hero-sm">
     <div class="wrap">
-      <p class="eyebrow">The GEO Nerd</p>
+      <p class="eyebrow">The GEO Nerd — Newsletter</p>
       <h1>Notes on PR &amp; the age of AI search.</h1>
-      <p class="lede">Field notes, frameworks and the occasional rant, from the desk of Zealous. New posts here also go out on Substack.</p>
+      <p class="lede">Field notes, frameworks and the occasional rant, from the desk of Zealous — written on Substack, mirrored here.</p>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
       {posts.length === 0 ? (
-        <p class="slate">First post is on its way — check back soon.</p>
+        <p class="slate">First issue is on its way — check back soon, or read along on <a href="https://thegeonerd.substack.com/" target="_blank" rel="noopener">Substack</a> directly.</p>
       ) : (
         <div class="post-list">
           {posts.map((post) => (
-            <a class="post-row" href={`/blog/${post.id}/`}>
+            <a class="post-row" href={`/newsletter/${post.slug}/`}>
               <p class="post-date folio">
-                {post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                {post.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
               </p>
               <div>
-                <h2>{post.data.title}</h2>
-                <p class="slate">{post.data.description}</p>
+                <h2>{post.title}</h2>
+                <p class="slate">{post.excerpt}</p>
               </div>
             </a>
           ))}

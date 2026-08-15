@@ -1,0 +1,188 @@
+---
+// Hand-built hub-and-spoke diagram — mirrors the "PR & GEO Strategy" model
+// from the original pitch deck: one strategy, five levers radiating out.
+// Every circle (hub and satellites) carries its own label inside it.
+// Draws itself in (lines fade, hub scales, nodes pop in staggered) the
+// first time it scrolls into view.
+const R = 62; // satellite circle radius
+
+const nodes = [
+  {
+    lines: ['EARNED', 'MEDIA'],
+    color: 'var(--coral)',
+    textColor: 'var(--paper)',
+    node: [410, 90],
+    edge: [410, 148],
+    hubEdge: [410, 240],
+  },
+  {
+    lines: ['OWNED', 'MEDIA'],
+    color: 'var(--blue)',
+    textColor: 'var(--paper)',
+    node: [628.7, 248.9],
+    edge: [573.5, 266.8],
+    hubEdge: [486.1, 295.3],
+  },
+  {
+    lines: ['ACCOLADES'],
+    color: 'var(--yellow)',
+    textColor: 'var(--ink)',
+    node: [545.2, 506.1],
+    edge: [511.1, 459.2],
+    hubEdge: [457, 384.7],
+  },
+  {
+    lines: ['IN-PERSON', '& COMMUNITY'],
+    color: 'var(--mint-deep)',
+    textColor: 'var(--paper)',
+    node: [274.8, 506.1],
+    edge: [308.9, 459.2],
+    hubEdge: [363, 384.7],
+  },
+  {
+    lines: ['REACTIVE &', 'NEWSJACKING'],
+    color: 'var(--violet)',
+    textColor: 'var(--paper)',
+    node: [191.3, 248.9],
+    edge: [246.5, 266.8],
+    hubEdge: [333.9, 295.3],
+  },
+];
+
+function lineOffsets(count: number) {
+  return count === 1 ? [4] : [-6, 11];
+}
+---
+
+<svg viewBox="0 0 820 600" class="hub-diagram" id="hub-diagram" role="img" aria-label="Diagram showing five services — Earned Media, Owned Media, Accolades, In-Person & Community, and Reactive & Newsjacking — radiating out from a central PR and GEO strategy.">
+  <circle cx="410" cy="320" r="230" class="orbit" />
+
+  {nodes.map((n, i) => (
+    <line
+      x1={n.hubEdge[0]} y1={n.hubEdge[1]}
+      x2={n.edge[0]} y2={n.edge[1]}
+      stroke={n.color} stroke-width="2"
+      class="spoke-line"
+      style={`--i:${i}`}
+    />
+  ))}
+
+  <circle cx="410" cy="320" r="80" class="hub" />
+  <text x="410" y="313" text-anchor="middle" class="hub-label">PR &amp; GEO</text>
+  <text x="410" y="334" text-anchor="middle" class="hub-label">STRATEGY</text>
+
+  {nodes.map((n, i) => (
+    <g class="node-group" style={`--i:${i}`}>
+      <circle cx={n.node[0]} cy={n.node[1]} r={R} fill={n.color} />
+      {n.lines.map((line, j) => (
+        <text
+          x={n.node[0]}
+          y={n.node[1] + lineOffsets(n.lines.length)[j]}
+          text-anchor="middle"
+          class="node-label"
+          fill={n.textColor}
+        >
+          {line}
+        </text>
+      ))}
+    </g>
+  ))}
+</svg>
+
+<script>
+  const svg = document.getElementById('hub-diagram');
+  if (svg) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(svg);
+  }
+</script>
+
+<noscript>
+  <style>
+    .hub, .hub-label, .spoke-line, .node-group {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  </style>
+</noscript>
+
+<style>
+  .hub-diagram {
+    width: 100%;
+    max-width: 780px;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+  }
+  .orbit {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 6;
+  }
+  .hub {
+    fill: var(--ink);
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0);
+    transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .hub-diagram.in-view .hub {
+    transform: scale(1);
+  }
+  .hub-label {
+    font-family: var(--font-display);
+    font-size: 24px;
+    fill: var(--paper);
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.35s;
+  }
+  .hub-diagram.in-view .hub-label {
+    opacity: 1;
+  }
+  .node-label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 12.5px;
+    letter-spacing: 0.01em;
+  }
+  .spoke-line {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    transition-delay: calc(var(--i) * 0.09s + 0.15s);
+  }
+  .hub-diagram.in-view .spoke-line {
+    opacity: 1;
+  }
+  .node-group {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0.5);
+    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: calc(var(--i) * 0.09s + 0.3s);
+  }
+  .hub-diagram.in-view .node-group {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hub, .hub-label, .spoke-line, .node-group {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>

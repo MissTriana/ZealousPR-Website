@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry, getCollection } from 'astro:content';
+
+const page = await getEntry('pages', 'specialisms');
+const c = page!.data;
+
+const allSectors = await getCollection('specialisms', ({ data }) => !data.draft);
+const sectors = allSectors.sort((a, b) => a.data.order - b.data.order);
+
+const colors = ['var(--coral)', 'var(--blue)', 'var(--mint-deep)', 'var(--violet)'];
+---
+
+<BaseLayout
+  title={c.seo_title}
+  description={c.seo_description}
+  path="/specialisms/"
+>
+  <section class="section hero-sm">
+    <div class="wrap">
+      <p class="eyebrow">{c.hero_eyebrow}</p>
+      <h1>{c.hero_heading}</h1>
+      <p class="lede">{c.hero_lede}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sector-grid">
+        {sectors.map((s, i) => (
+          <a class="sector-card lift" href={`/specialisms/${s.id}/`}>
+            <span class="sector-bar" style={`background:${colors[i % 4]}`} />
+            <h2>{s.data.title}</h2>
+            <p class="slate">{s.data.summary}</p>
+            <span class="sector-link" style={`color:${colors[i % 4]}`}>Read more &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark cta-band">
+    <div class="wrap cta-band-inner">
+      <h2>{c.cta_heading}</h2>
+      <p class="lede" style="color:#d9d5c8">{c.cta_lede}</p>
+      <a class="btn btn-primary btn-on-dark" href="/contact/">{c.cta_button}</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-sm { padding-block: clamp(2.5rem, 6vw, 4rem) 1rem; }
+  .hero-sm h1 { margin-block: 0.6rem 1.2rem; max-width: 20ch; }
+
+  .sector-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+  .sector-card {
+    display: block;
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.75rem;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .sector-bar { display: block; width: 2.5rem; height: 4px; border-radius: 2px; margin-bottom: 1rem; }
+  .sector-card h2 { margin-bottom: 0.6rem; font-size: 1.6rem; }
+  .sector-link { display: inline-block; margin-top: 1rem; font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .cta-band-inner { text-align: center; display: grid; gap: 1.5rem; justify-items: center; max-width: 50ch; margin-inline: auto; }
+
+  @media (max-width: 700px) {
+    .sector-grid { grid-template-columns: 1fr; }
+  }
+</style>

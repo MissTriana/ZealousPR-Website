@@ -1,31 +1,35 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'contact');
+const c = page!.data;
 ---
 
 <BaseLayout
-  title="Contact Zealous"
-  description="Get in touch with Zealous to talk PR, social and GEO strategy. Email, call, or send a brief and we'll come back with a plan."
+  title={c.seo_title}
+  description={c.seo_description}
   path="/contact/"
 >
   <section class="section hero-sm">
     <div class="wrap contact-grid">
       <div>
-        <p class="eyebrow">Contact</p>
-        <h1>Tell us where you want to be known.</h1>
-        <p class="lede">Send a few lines about your business and what you're trying to achieve. We'll come back with honest thoughts, not a script.</p>
+        <p class="eyebrow">{c.hero_eyebrow}</p>
+        <h1>{c.hero_heading}</h1>
+        <p class="lede">{c.hero_lede}</p>
 
         <div class="direct">
           <div>
             <p class="eyebrow">Email</p>
-            <p><a href="mailto:yasmine.triana@zealouspr.com">yasmine.triana@zealouspr.com</a></p>
+            <p><a href={`mailto:${c.email}`}>{c.email}</a></p>
           </div>
           <div>
             <p class="eyebrow">Call</p>
-            <p><a href="tel:+447496928736">07496 928736</a></p>
+            <p><a href={`tel:${c.phone_link}`}>{c.phone_display}</a></p>
           </div>
           <div>
             <p class="eyebrow">Elsewhere</p>
-            <p><a href="https://www.linkedin.com/in/yasminetriana" target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="/blog/">The GEO Nerd</a></p>
+            <p><a href={c.linkedin_url} target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="/newsletter/">The GEO Nerd</a></p>
           </div>
         </div>
       </div>
@@ -43,10 +47,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <label for="company">Company</label>
         <input id="company" name="company" type="text" />
 
-        <label for="message">What are you trying to achieve?</label>
+        <label for="message">{c.form_question}</label>
         <textarea id="message" name="message" rows="5" required></textarea>
 
-        <button type="submit" class="btn btn-primary">Send it over</button>
+        <button type="submit" class="btn btn-primary">{c.form_button}</button>
       </form>
     </div>
   </section>

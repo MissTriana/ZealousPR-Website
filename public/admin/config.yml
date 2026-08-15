@@ -12,9 +12,13 @@ media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "blog"
-    label: "Blog — The GEO Nerd"
-    folder: "src/content/blog"
+  # The GEO Nerd newsletter is written on Substack (thegeonerd.substack.com)
+  # and pulled into the site automatically — nothing to manage here for it.
+  # Write and publish on Substack as normal.
+
+  - name: "news"
+    label: "News & Insights"
+    folder: "src/content/news"
     create: true
     slug: "{{slug}}"
     extension: "md"
@@ -22,10 +26,224 @@ collections:
     identifier_field: title
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text", hint: "One or two sentences — shown on the blog list page and used for SEO." }
+      - { label: "Description", name: "description", widget: "text", hint: "One or two sentences — shown on the listing page and used for SEO." }
       - { label: "Publish Date", name: "pubDate", widget: "datetime" }
-      - { label: "Author", name: "author", widget: "string", default: "Yasmine Triana" }
-      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - { label: "Author", name: "author", widget: "string", default: "Zealous" }
       - { label: "Tags", name: "tags", widget: "list", required: false }
       - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "Turn on to hide this post from the live site until it's ready." }
       - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "specialisms"
+    label: "Specialisms (Sector Pages)"
+    folder: "src/content/specialisms"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    identifier_field: title
+    fields:
+      - { label: "Sector name", name: "title", widget: "string" }
+      - { label: "Short summary", name: "summary", widget: "text", hint: "Shown on the Specialisms listing page as the card description." }
+      - { label: "SEO Description", name: "seo_description", widget: "text" }
+      - { label: "Display order", name: "order", widget: "number", hint: "Lower numbers appear first on the listing page.", default: 1 }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "Turn on to hide this page from the live site until it's ready." }
+      - { label: "Body", name: "body", widget: "markdown", hint: "The full page content. Use ## for subheadings." }
+
+  - name: "pages"
+    label: "Page Text"
+    files:
+      - name: "home"
+        label: "Homepage"
+        file: "src/content/pages/home.yaml"
+        fields:
+          - { label: "SEO Title", name: "seo_title", widget: "string" }
+          - { label: "SEO Description", name: "seo_description", widget: "text" }
+          - { label: "Hero — Eyebrow label", name: "hero_eyebrow", widget: "string" }
+          - { label: "Hero — Headline (main part)", name: "hero_headline", widget: "string" }
+          - { label: "Hero — Headline (coloured part)", name: "hero_headline_accent", widget: "string" }
+          - { label: "Hero — Paragraph", name: "hero_lede", widget: "text" }
+          - { label: "Hero — Primary button text", name: "hero_cta_primary", widget: "string" }
+          - { label: "Hero — Secondary button text", name: "hero_cta_secondary", widget: "string" }
+          - label: "Stats panel (4 items)"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Value (e.g. 94%)", name: "value", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+          - { label: "Signature — Eyebrow", name: "signature_eyebrow", widget: "string" }
+          - { label: "Signature — Heading", name: "signature_heading", widget: "string" }
+          - { label: "Signature — Paragraph", name: "signature_lede", widget: "text" }
+          - { label: "Signature — 'Old way' label", name: "signature_old_label", widget: "string" }
+          - { label: "Signature — 'Old way' title", name: "signature_old_title", widget: "string" }
+          - { label: "Signature — 'Old way' body", name: "signature_old_body", widget: "text" }
+          - { label: "Signature — 'New way' label", name: "signature_new_label", widget: "string" }
+          - { label: "Signature — 'New way' title", name: "signature_new_title", widget: "string" }
+          - { label: "Signature — 'New way' body", name: "signature_new_body", widget: "text" }
+          - { label: "Pillars — Eyebrow", name: "pillars_eyebrow", widget: "string" }
+          - { label: "Pillars — Heading", name: "pillars_heading", widget: "string" }
+          - label: "Pillars (3 services)"
+            name: "pillars"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "label", widget: "string" }
+              - { label: "Description", name: "body", widget: "text" }
+          - { label: "Method — Eyebrow", name: "method_eyebrow", widget: "string" }
+          - { label: "Method — Heading", name: "method_heading", widget: "string" }
+          - { label: "Method — Intro paragraph", name: "method_lede", widget: "text" }
+          - label: "Method steps (3)"
+            name: "method"
+            widget: "list"
+            fields:
+              - { label: "Step name", name: "step", widget: "string" }
+              - { label: "Description", name: "body", widget: "text" }
+          - { label: "Bottom CTA — Heading", name: "cta_heading", widget: "string" }
+          - { label: "Bottom CTA — Paragraph", name: "cta_lede", widget: "text" }
+          - { label: "Bottom CTA — Button text", name: "cta_button", widget: "string" }
+
+      - name: "services"
+        label: "Services Page"
+        file: "src/content/pages/services.yaml"
+        fields:
+          - { label: "SEO Title", name: "seo_title", widget: "string" }
+          - { label: "SEO Description", name: "seo_description", widget: "text" }
+          - { label: "Hero — Eyebrow", name: "hero_eyebrow", widget: "string" }
+          - { label: "Hero — Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero — Paragraph", name: "hero_lede", widget: "text" }
+          - { label: "Diagram — Eyebrow", name: "hub_eyebrow", widget: "string" }
+          - { label: "Diagram — Heading", name: "hub_heading", widget: "string" }
+          - { label: "Diagram — Paragraph", name: "hub_lede", widget: "text" }
+          - label: "Service streams (3)"
+            name: "streams"
+            widget: "list"
+            fields:
+              - { label: "Number label (e.g. 01)", name: "n", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "body", widget: "text" }
+              - { label: "Bullet points", name: "items", widget: "list" }
+          - { label: "Methodology — Eyebrow", name: "method_eyebrow", widget: "string" }
+          - { label: "Methodology — Heading", name: "method_heading", widget: "string" }
+          - { label: "Methodology — Intro paragraph", name: "method_lede", widget: "text" }
+          - label: "Methodology steps (3)"
+            name: "method"
+            widget: "list"
+            fields:
+              - { label: "Step name", name: "step", widget: "string" }
+              - { label: "Description", name: "body", widget: "text" }
+              - { label: "Bullet points (optional)", name: "items", widget: "list", required: false }
+          - { label: "Bottom CTA — Heading", name: "cta_heading", widget: "string" }
+          - { label: "Bottom CTA — Paragraph", name: "cta_lede", widget: "text" }
+          - { label: "Bottom CTA — Button text", name: "cta_button", widget: "string" }
+
+      - name: "about"
+        label: "About Page"
+        file: "src/content/pages/about.yaml"
+        fields:
+          - { label: "SEO Title", name: "seo_title", widget: "string" }
+          - { label: "SEO Description", name: "seo_description", widget: "text" }
+          - { label: "Hero — Eyebrow", name: "hero_eyebrow", widget: "string" }
+          - { label: "Hero — Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero — Paragraph", name: "hero_lede", widget: "text" }
+          - { label: "Founder — Eyebrow", name: "founder_eyebrow", widget: "string" }
+          - { label: "Founder — Heading", name: "founder_heading", widget: "string" }
+          - { label: "Founder — Initials (photo placeholder)", name: "founder_initials", widget: "string" }
+          - { label: "Founder — Intro paragraph", name: "founder_lede", widget: "text" }
+          - { label: "Founder — Paragraph 2", name: "founder_body_1", widget: "text" }
+          - { label: "Founder — Paragraph 3", name: "founder_body_2", widget: "text" }
+          - { label: "Values — Eyebrow", name: "values_eyebrow", widget: "string" }
+          - { label: "Values — Heading", name: "values_heading", widget: "string" }
+          - label: "Values (4)"
+            name: "values"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "label", widget: "string" }
+              - { label: "Description", name: "body", widget: "text" }
+          - { label: "Bottom CTA — Heading", name: "cta_heading", widget: "string" }
+          - { label: "Bottom CTA — Paragraph", name: "cta_lede", widget: "text" }
+          - { label: "Bottom CTA — Button text", name: "cta_button", widget: "string" }
+
+      - name: "contact"
+        label: "Contact Page"
+        file: "src/content/pages/contact.yaml"
+        fields:
+          - { label: "SEO Title", name: "seo_title", widget: "string" }
+          - { label: "SEO Description", name: "seo_description", widget: "text" }
+          - { label: "Hero — Eyebrow", name: "hero_eyebrow", widget: "string" }
+          - { label: "Hero — Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero — Paragraph", name: "hero_lede", widget: "text" }
+          - { label: "Email address", name: "email", widget: "string" }
+          - { label: "Phone (displayed)", name: "phone_display", widget: "string" }
+          - { label: "Phone (link format, e.g. +447...)", name: "phone_link", widget: "string" }
+          - { label: "LinkedIn URL", name: "linkedin_url", widget: "string" }
+          - { label: "Form question", name: "form_question", widget: "string" }
+          - { label: "Form button text", name: "form_button", widget: "string" }
+
+      - name: "case-studies"
+        label: "Results Page"
+        file: "src/content/pages/case-studies.yaml"
+        fields:
+          - { label: "SEO Title", name: "seo_title", widget: "string" }
+          - { label: "SEO Description", name: "seo_description", widget: "text" }
+          - { label: "Hero — Eyebrow", name: "hero_eyebrow", widget: "string" }
+          - { label: "Hero — Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero — Paragraph", name: "hero_lede", widget: "text" }
+          - { label: "Metrics — Eyebrow", name: "metrics_eyebrow", widget: "string" }
+          - { label: "Metrics — Heading", name: "metrics_heading", widget: "string" }
+          - { label: "Metrics — Intro paragraph", name: "metrics_lede", widget: "text" }
+          - { label: "Metrics list", name: "metrics", widget: "list" }
+          - { label: "Case studies — Eyebrow", name: "cases_eyebrow", widget: "string" }
+          - { label: "Case studies — Heading", name: "cases_heading", widget: "string" }
+          - { label: "Placeholder card — Title", name: "placeholder_title", widget: "string" }
+          - { label: "Placeholder card — Body", name: "placeholder_body", widget: "text" }
+          - { label: "Bottom CTA — Heading", name: "cta_heading", widget: "string" }
+          - { label: "Bottom CTA — Paragraph", name: "cta_lede", widget: "text" }
+          - { label: "Bottom CTA — Button text", name: "cta_button", widget: "string" }
+
+      - name: "specialisms"
+        label: "Specialisms Index Page"
+        file: "src/content/pages/specialisms.yaml"
+        fields:
+          - { label: "SEO Title", name: "seo_title", widget: "string" }
+          - { label: "SEO Description", name: "seo_description", widget: "text" }
+          - { label: "Hero — Eyebrow", name: "hero_eyebrow", widget: "string" }
+          - { label: "Hero — Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero — Paragraph", name: "hero_lede", widget: "text" }
+          - { label: "Bottom CTA — Heading", name: "cta_heading", widget: "string" }
+          - { label: "Bottom CTA — Paragraph", name: "cta_lede", widget: "text" }
+          - { label: "Bottom CTA — Button text", name: "cta_button", widget: "string" }
+
+      - name: "team"
+        label: "Team Page"
+        file: "src/content/pages/team.yaml"
+        fields:
+          - { label: "SEO Title", name: "seo_title", widget: "string" }
+          - { label: "SEO Description", name: "seo_description", widget: "text" }
+          - { label: "Hero — Eyebrow", name: "hero_eyebrow", widget: "string" }
+          - { label: "Hero — Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero — Paragraph", name: "hero_lede", widget: "text" }
+          - label: "Team members"
+            name: "members"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
+              - { label: "Initials (photo placeholder)", name: "initials", widget: "string" }
+              - { label: "Bio", name: "bio", widget: "text" }
+          - { label: "Bottom CTA — Heading", name: "cta_heading", widget: "string" }
+          - { label: "Bottom CTA — Paragraph", name: "cta_lede", widget: "text" }
+          - { label: "Bottom CTA — Button text", name: "cta_button", widget: "string" }
+
+      - name: "faq"
+        label: "FAQ Page"
+        file: "src/content/pages/faq.yaml"
+        fields:
+          - { label: "SEO Title", name: "seo_title", widget: "string" }
+          - { label: "SEO Description", name: "seo_description", widget: "text" }
+          - { label: "Hero — Eyebrow", name: "hero_eyebrow", widget: "string" }
+          - { label: "Hero — Heading", name: "hero_heading", widget: "string" }
+          - { label: "Hero — Paragraph", name: "hero_lede", widget: "text" }
+          - label: "Questions & answers"
+            name: "faqs"
+            widget: "list"
+            fields:
+              - { label: "Question", name: "question", widget: "string" }
+              - { label: "Answer", name: "answer", widget: "text" }

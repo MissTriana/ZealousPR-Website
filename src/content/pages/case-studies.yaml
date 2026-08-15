@@ -1,0 +1,26 @@
+seo_title: "Results — Case Studies"
+seo_description: "Zealous is a newly launched agency. Here's exactly how we measure results for clients — and how our own case studies will build from here."
+
+hero_eyebrow: "Results"
+hero_heading: "The results page, being written in real time."
+hero_lede: "Zealous is newly launched — so this page is honest about where we are: no borrowed numbers, no recycled logos. What you'll find below is exactly how we measure success for every client, and the first slots waiting to be filled with real results."
+
+metrics_eyebrow: "What we measure"
+metrics_heading: "Accountability, from day one."
+metrics_lede: "Every engagement is benchmarked and tracked against the same core signals:"
+metrics:
+  - "Volume & quality of press coverage, mainstream and trade"
+  - "Share of voice against named competitors"
+  - "How often — and how accurately — AI engines cite you"
+  - "Social reach, engagement and follower growth"
+  - "Referral traffic and enquiry volume from earned & owned media"
+  - "Sentiment: what people (and AI) actually say about you"
+
+cases_eyebrow: "Case studies"
+cases_heading: "Reserved for clients like you."
+placeholder_title: "Coming soon"
+placeholder_body: "This space is reserved for a real client, with real numbers. Could it be yours?"
+
+cta_heading: "Be our next case study."
+cta_lede: "Early clients get founder-level attention and a strategy built without a template. Let's start yours."
+cta_button: "Book a strategy call"

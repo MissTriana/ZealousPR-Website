@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'faq');
+const c = page!.data;
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: c.faqs.map((f: { question: string; answer: string }) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+---
+
+<BaseLayout
+  title={c.seo_title}
+  description={c.seo_description}
+  path="/faq/"
+  extraJsonLd={[faqJsonLd]}
+>
+  <section class="section hero-sm">
+    <div class="wrap">
+      <p class="eyebrow">{c.hero_eyebrow}</p>
+      <h1>{c.hero_heading}</h1>
+      <p class="lede">{c.hero_lede}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap faq-list">
+      {c.faqs.map((f: { question: string; answer: string }) => (
+        <details class="faq-item">
+          <summary>{f.question}</summary>
+          <p class="slate">{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-dim cta-strip">
+    <div class="wrap cta-strip-inner">
+      <p class="lede" style="margin:0">Still have a question?</p>
+      <a class="btn btn-primary" href="/contact/">Ask us directly</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-sm { padding-block: clamp(2.5rem, 6vw, 4rem) 1rem; }
+  .hero-sm h1 { margin-block: 0.6rem 1.2rem; max-width: 20ch; }
+
+  .faq-list { max-width: 52rem; display: grid; gap: 0; }
+  .faq-item {
+    border-top: 1px solid var(--line);
+    padding-block: 1.5rem;
+  }
+  .faq-item:last-child { border-bottom: 1px solid var(--line); }
+  .faq-item summary {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 1.15rem;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+';
+    font-family: var(--font-body);
+    font-size: 1.4rem;
+    color: var(--red);
+    flex: none;
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item p { margin-top: 1rem; max-width: 60ch; }
+
+  .cta-strip-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 600px) {
+    .faq-item summary { font-size: 1.05rem; }
+  }
+</style>

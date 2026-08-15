@@ -1,12 +1,37 @@
 ---
 const nav = [
-  { href: '/services/', label: 'Services' },
-  { href: '/about/', label: 'About' },
+  {
+    label: 'What we do',
+    href: '/services/',
+    children: [
+      { href: '/services/', label: 'Services' },
+      { href: '/specialisms/', label: 'Specialisms' },
+    ],
+  },
+  {
+    label: 'About',
+    href: '/about/',
+    children: [
+      { href: '/about/', label: 'About us' },
+      { href: '/team/', label: 'Team' },
+    ],
+  },
   { href: '/case-studies/', label: 'Results' },
-  { href: '/blog/', label: 'The GEO Nerd' },
+  { href: '/news/', label: 'Latest' },
+  { href: '/newsletter/', label: 'The GEO Nerd' },
   { href: '/contact/', label: 'Contact' },
 ];
 const path = Astro.url.pathname;
+
+function isActive(href: string) {
+  return path.startsWith(href);
+}
+function groupActive(item: (typeof nav)[number]) {
+  if ('children' in item && item.children) {
+    return item.children.some((c) => isActive(c.href));
+  }
+  return isActive(item.href);
+}
 ---
 
 <header class="masthead">
@@ -17,11 +42,26 @@ const path = Astro.url.pathname;
         <span>Menu</span>
       </button>
       <ul id="site-nav">
-        {nav.map((item) => (
-          <li>
-            <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>
-          </li>
-        ))}
+        {nav.map((item) =>
+          'children' in item && item.children ? (
+            <li class="nav-parent">
+              <details>
+                <summary aria-current={groupActive(item) ? 'page' : undefined}>{item.label}</summary>
+                <ul class="submenu">
+                  {item.children.map((child) => (
+                    <li>
+                      <a href={child.href} aria-current={isActive(child.href) ? 'page' : undefined}>{child.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+          ) : (
+            <li>
+              <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+            </li>
+          )
+        )}
       </ul>
     </nav>
   </div>
@@ -52,6 +92,7 @@ const path = Astro.url.pathname;
   nav ul {
     list-style: none;
     display: flex;
+    align-items: center;
     gap: clamp(1.1rem, 2vw, 2rem);
     margin: 0;
     padding: 0;
@@ -70,6 +111,48 @@ const path = Astro.url.pathname;
     color: var(--red);
     border-bottom-color: var(--red);
   }
+
+  /* Dropdown groups */
+  .nav-parent details { position: relative; }
+  .nav-parent summary {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid transparent;
+  }
+  .nav-parent summary::-webkit-details-marker { display: none; }
+  .nav-parent summary::after {
+    content: '';
+    width: 0.4em;
+    height: 0.4em;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform 0.15s ease;
+  }
+  .nav-parent details[open] summary::after { transform: rotate(-135deg) translateY(2px); }
+  .nav-parent summary:hover, .nav-parent summary[aria-current='page'] {
+    color: var(--red);
+    border-bottom-color: var(--red);
+  }
+  .submenu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin: 0;
+    padding: 1rem 1.1rem;
+  }
+  .submenu a { white-space: nowrap; }
+
   .nav-toggle {
     display: none;
     font-family: var(--font-mono);
@@ -83,6 +166,22 @@ const path = Astro.url.pathname;
     cursor: pointer;
   }
 
+  /* Desktop: submenu becomes a floating dropdown panel */
+  @media (min-width: 721px) {
+    .nav-parent .submenu {
+      position: absolute;
+      top: calc(100% + 0.9rem);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 14px 28px -18px rgba(7, 5, 15, 0.35);
+      min-width: 10rem;
+      z-index: 10;
+    }
+  }
+
   @media (max-width: 720px) {
     .nav-toggle { display: inline-flex; }
     nav ul {
@@ -90,6 +189,7 @@ const path = Astro.url.pathname;
       inset-inline: 0;
       top: 100%;
       flex-direction: column;
+      align-items: stretch;
       background: var(--paper);
       border-bottom: 1px solid var(--line);
       padding: 1rem var(--gutter) 1.5rem;
@@ -97,6 +197,7 @@ const path = Astro.url.pathname;
       display: none;
     }
     nav ul.open { display: flex; }
+    .nav-parent .submenu { padding: 0.8rem 0 0 1rem; }
   }
 </style>
 
@@ -106,5 +207,21 @@ const path = Astro.url.pathname;
   toggle?.addEventListener('click', () => {
     const open = list?.classList.toggle('open');
     toggle.setAttribute('aria-expanded', String(!!open));
+  });
+
+  // Desktop: open a dropdown on hover, close others, and close on outside click.
+  const details = document.querySelectorAll<HTMLDetailsElement>('.nav-parent details');
+  details.forEach((d) => {
+    d.addEventListener('mouseenter', () => {
+      if (window.innerWidth > 720) d.open = true;
+    });
+    d.addEventListener('mouseleave', () => {
+      if (window.innerWidth > 720) d.open = false;
+    });
+  });
+  document.addEventListener('click', (e) => {
+    details.forEach((d) => {
+      if (!d.contains(e.target as Node)) d.open = false;
+    });
   });
 </script>

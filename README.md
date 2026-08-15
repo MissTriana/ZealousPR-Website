@@ -33,7 +33,22 @@ npm run preview   # preview the built site
 
 ## Updating page copy (services, about, etc.)
 
-Blog posts are editable through `/admin/`. The core pages (home, services, about, contact) currently live in the page files themselves (`src/pages/.../index.astro`) for full design control — come back here (or to any developer) for copy changes to those, or ask to have them moved into the CMS too if you'd like full self-service control over every page.
+Every page's text — homepage, services, about, contact, and the results page — is editable through `/admin/`. Log in, pick "Page Text," choose the page, and edit any field. Publishing commits the change straight to GitHub and Netlify redeploys automatically — no code, no re-uploading.
+
+Layout, colours, and structural changes (new sections, design tweaks) still require editing the actual page files in `src/pages/`.
+
+## The newsletter ("The GEO Nerd")
+
+Newsletter content is written entirely on **Substack** (`thegeonerd.substack.com`), not on this site's dashboard. The site automatically pulls in your latest Substack posts at `/newsletter/` every time it rebuilds, using Substack's public RSS feed (`src/lib/substack.ts`).
+
+- **To publish a new issue:** just write and publish it on Substack, as normal.
+- **It won't appear on the site instantly** — only after the next rebuild. Every edit you make elsewhere on the site (e.g. through `/admin/`) triggers a rebuild, so posts will typically show up within a day. To make a Substack post appear immediately, go to Netlify → your site → **Deploys** → **Trigger deploy** → **Deploy site**.
+- **Optional — full automation:** a free service like cron-job.org can be set to ping a Netlify "build hook" URL a few times a day, so new Substack posts appear without you doing anything. Ask if you'd like this set up.
+- **Why posts link back to Substack:** each mirrored post includes a technical tag (a "canonical link") pointing back to the original Substack post. This is standard practice for syndicated content — it tells Google "the original lives on Substack," avoiding duplicate-content issues, while still keeping the full content crawlable on your own domain for GEO purposes.
+
+## Company News & Insights
+
+A separate section, at `/news/`, for announcements and company updates you write directly — not connected to Substack. Fully editable through `/admin/` under "News & Insights," exactly like the old blog worked: write, publish, done.
 
 ## Before going live
 

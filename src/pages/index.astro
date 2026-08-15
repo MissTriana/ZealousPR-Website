@@ -1,91 +1,70 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import OrbitField from '../components/OrbitField.astro';
+import { getEntry } from 'astro:content';
 
-const stats = [
-  { value: '94%', label: 'of B2B buyers now use AI somewhere in their buying process' },
-  { value: '50%', label: 'of consumers use AI to discover and compare brands' },
-  { value: '69.5%', label: 'of Google searches now end without a single click' },
-  { value: '4.4x', label: 'higher conversion rate from AI-driven traffic vs. traditional organic' },
-];
+const page = await getEntry('pages', 'home');
+const c = page!.data;
+const pillarIcons = ['megaphone', 'signal', 'award'] as const;
+const methodIcons = ['search', 'bolt', 'trend'] as const;
 
-const pillars = [
-  {
-    label: 'Earned Media',
-    body: 'News, thought leadership and case studies, mapped deliberately against your key messages — so every piece of coverage does a job, not just fills a clippings file.',
-  },
-  {
-    label: 'Owned Media',
-    body: 'Your website and social channels, built and written to work exceedingly hard: optimised for AI visibility and genuine human engagement, at the same time.',
-  },
-  {
-    label: 'Accolades',
-    body: 'Awards and accreditation selected with intent, chosen to reinforce the exact credibility signals your audiences — and the algorithms — are looking for.',
-  },
-];
-
-const method = [
-  {
-    step: 'Audit & assess',
-    body: "We benchmark your current footprint for visibility, sentiment, narrative and call-to-action — across search, social, and the AI engines now doing the recommending.",
-  },
-  {
-    step: 'Activate',
-    body: 'A bespoke PR & GEO strategy, delivered by specialists in media relations, SEO, award submissions, social and community engagement.',
-  },
-  {
-    step: 'Track & adapt',
-    body: "We measure against the original benchmark and short, medium and long-term goals — staying as agile as the media and AI landscape we're operating in.",
-  },
-];
+function parseStat(value: string) {
+  const match = value.match(/^([\d.]+)(.*)$/);
+  if (!match) return { target: 0, suffix: value, decimals: 0 };
+  const [, num, suffix] = match;
+  const decimals = num.includes('.') ? num.split('.')[1].length : 0;
+  return { target: parseFloat(num), suffix, decimals };
+}
 ---
 
 <BaseLayout
-  title="Zealous — Creative PR & GEO Specialists"
-  description="Zealous is a creative PR, social and GEO specialist agency, helping ambitious businesses win the hearts and minds of journalists, audiences, and AI search engines alike."
+  title={c.seo_title}
+  description={c.seo_description}
   path="/"
 >
   <section class="hero">
+    <OrbitField />
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow">Creative PR &amp; GEO Specialists</p>
-        <h1>Winning hearts, minds — <em>and algorithms.</em></h1>
-        <p class="lede">
-          The goal of PR has changed. Today you're building trust with the journalists and audiences who've always mattered — and with the AI engines now doing a growing share of the recommending. Zealous builds one strategy for both.
-        </p>
+        <p class="eyebrow">{c.hero_eyebrow}</p>
+        <h1>{c.hero_headline} <em>{c.hero_headline_accent}</em></h1>
+        <p class="lede">{c.hero_lede}</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="/contact/">Book a strategy call</a>
-          <a class="btn btn-ghost" href="/services/">How it works</a>
+          <a class="btn btn-primary" href="/contact/">{c.hero_cta_primary}</a>
+          <a class="btn btn-ghost" href="/services/">{c.hero_cta_secondary}</a>
         </div>
       </div>
       <div class="stat-panel" aria-label="Why PR strategy now has to include AI visibility">
-        {stats.map((s) => (
-          <div class="stat">
-            <p class="stat-value">{s.value}</p>
-            <p class="stat-label slate">{s.label}</p>
-          </div>
-        ))}
+        {c.stats.map((s: { value: string; label: string }) => {
+          const { target, suffix, decimals } = parseStat(s.value);
+          return (
+            <div class="stat">
+              <p class="stat-value" data-count-to={target} data-suffix={suffix} data-decimals={decimals}>{s.value}</p>
+              <p class="stat-label slate">{s.label}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   </section>
 
   <section class="section signature">
     <div class="wrap">
-      <p class="eyebrow">Why GEO, why now</p>
-      <h2>Your next customer might never see a search result again.</h2>
-      <p class="lede">
-        Ask an AI engine about your industry today and it gives one answer, built from sources it trusts. Being findable isn't enough anymore — you have to be the source that gets cited. Here's the shift in practice:
-      </p>
+      <p class="eyebrow">{c.signature_eyebrow}</p>
+      <h2>{c.signature_heading}</h2>
+      <p class="lede">{c.signature_lede}</p>
 
       <div class="split">
         <div class="split-card split-old">
-          <p class="split-label slate">The old way</p>
-          <p class="split-title">Ten blue links</p>
-          <p class="slate">A searcher scans a results page, weighs a handful of options, and picks one to click — with your brand as one voice among many.</p>
+          <p class="split-label slate">{c.signature_old_label}</p>
+          <p class="split-title">{c.signature_old_title}</p>
+          <p class="slate">{c.signature_old_body}</p>
         </div>
         <div class="split-card split-new">
-          <p class="split-label" style="color:var(--yellow)">The new way</p>
-          <p class="split-title">One synthesised answer</p>
-          <p style="color:#fff0e6">An AI engine reads the web on the searcher's behalf and hands back a single recommendation. If your business isn't part of what it read and trusted, you were never in the running.</p>
+          <p class="split-label" style="color:var(--yellow)">{c.signature_new_label}</p>
+          <p class="split-title">{c.signature_new_title}</p>
+          <p style="color:#fff0e6">{c.signature_new_body}</p>
         </div>
       </div>
     </div>
@@ -93,12 +72,15 @@ const method = [
 
   <section class="section">
     <div class="wrap">
-      <p class="eyebrow">What we do</p>
-      <h2>Three pillars, one strategy.</h2>
+      <p class="eyebrow">{c.pillars_eyebrow}</p>
+      <h2>{c.pillars_heading}</h2>
       <div class="pillars">
-        {pillars.map((p, i) => (
-          <article class="pillar">
-            <p class="folio" style={`color:${['var(--coral)', 'var(--blue)', 'var(--mint-deep)'][i]}`}>0{i + 1}</p>
+        {c.pillars.map((p: { label: string; body: string }, i: number) => (
+          <article class="pillar lift reveal" data-delay={i * 0.1}>
+            <div class="pillar-icon" style={`color:${['var(--coral)', 'var(--blue)', 'var(--mint-deep)'][i % 3]}`}>
+              <Icon name={pillarIcons[i % 3]} />
+            </div>
+            <p class="folio" style={`color:${['var(--coral)', 'var(--blue)', 'var(--mint-deep)'][i % 3]}`}>0{i + 1}</p>
             <h3>{p.label}</h3>
             <p class="slate">{p.body}</p>
           </article>
@@ -109,13 +91,13 @@ const method = [
 
   <section class="section section-dim">
     <div class="wrap">
-      <p class="eyebrow">Our approach</p>
-      <h2>Audit. Activate. Track and adapt.</h2>
-      <p class="lede">We start with a full-immersion session to get under the skin of your business, then run a repeatable rhythm:</p>
+      <p class="eyebrow">{c.method_eyebrow}</p>
+      <h2>{c.method_heading}</h2>
+      <p class="lede">{c.method_lede}</p>
       <ol class="method">
-        {method.map((m, i) => (
-          <li>
-            <span class="folio">0{i + 1}</span>
+        {c.method.map((m: { step: string; body: string }, i: number) => (
+          <li class="reveal" data-delay={i * 0.1}>
+            <div class="method-icon"><Icon name={methodIcons[i % 3]} size={32} /></div>
             <div>
               <h3>{m.step}</h3>
               <p class="slate">{m.body}</p>
@@ -128,20 +110,49 @@ const method = [
 
   <section class="section section-dark cta-band">
     <div class="wrap cta-band-inner">
-      <h2>Ready to be the answer, not just a result?</h2>
-      <p class="lede" style="color:#d9d5c8">Tell us about your business and where you want to be known. We'll come back with a strategy, not a sales pitch.</p>
-      <a class="btn btn-primary btn-on-dark" href="/contact/">Start the conversation</a>
+      <h2>{c.cta_heading}</h2>
+      <p class="lede" style="color:#d9d5c8">{c.cta_lede}</p>
+      <a class="btn btn-primary btn-on-dark" href="/contact/">{c.cta_button}</a>
     </div>
   </section>
 </BaseLayout>
 
+<script>
+  function animateCount(el: HTMLElement) {
+    const target = parseFloat(el.dataset.countTo || '0');
+    const suffix = el.dataset.suffix || '';
+    const decimals = parseInt(el.dataset.decimals || '0', 10);
+    const duration = 1300;
+    const start = performance.now();
+
+    function frame(now: number) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = target * eased;
+      el.textContent = value.toFixed(decimals) + suffix;
+      if (progress < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    document.querySelectorAll<HTMLElement>('[data-count-to]').forEach((el) => {
+      el.textContent = '0' + (el.dataset.suffix || '');
+      animateCount(el);
+    });
+  }
+</script>
+
 <style>
-  .hero { padding-block: clamp(3rem, 8vw, 6rem) clamp(3rem, 6vw, 5rem); }
+  .hero { padding-block: clamp(3rem, 8vw, 6rem) clamp(3rem, 6vw, 5rem); position: relative; overflow: hidden; }
   .hero-grid {
     display: grid;
     grid-template-columns: 1.2fr 0.9fr;
     gap: clamp(2rem, 5vw, 4rem);
     align-items: start;
+    position: relative;
+    z-index: 1;
   }
   .hero h1 { margin-block: 0.5rem 1.2rem; }
   .hero h1 em { font-style: normal; color: var(--coral); }
@@ -176,11 +187,20 @@ const method = [
   .split-new .split-title { color: #fff; }
   .split-old .split-title { color: var(--ink); }
 
-  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 2.5rem; }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; margin-top: 2.5rem; }
+  .pillar {
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.75rem;
+  }
+  .pillar-icon { margin-bottom: 1rem; }
+  .pillar .folio { margin-top: 0; }
   .pillar h3 { margin: 0.6rem 0 0.6rem; }
 
   .method { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; gap: 1.75rem; max-width: 62ch; }
-  .method li { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; align-items: baseline; }
+  .method li { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; align-items: start; }
+  .method-icon { color: var(--coral); padding-top: 0.15rem; }
   .method h3 { margin: 0 0 0.4rem; font-size: 1.2rem; }
 
   .cta-band-inner { text-align: center; display: grid; gap: 1.5rem; justify-items: center; max-width: 50ch; margin-inline: auto; }

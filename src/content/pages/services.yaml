@@ -1,0 +1,59 @@
+seo_title: "Services — Earned, Owned & GEO Strategy"
+seo_description: "PR, social and GEO services from Zealous: earned media, owned media optimised for AI visibility, accolades, and a clear audit-activate-track methodology."
+
+hero_eyebrow: "Services"
+hero_heading: "PR & GEO, built as one strategy."
+hero_lede: "PR and GEO are fundamentally about advocacy. The goal hasn't changed — you're still winning hearts and minds. What's changed is that some of those minds are now artificial, and they're increasingly the ones making the recommendation. We plan for both from day one."
+
+hub_eyebrow: "The model"
+hub_heading: "One strategy, five levers."
+hub_lede: "Every lever below feeds the same goal: a business that's visible, credible and citable — to journalists, audiences, and the AI engines now doing a growing share of the recommending."
+
+streams:
+  - n: "01"
+    title: "Earned Media"
+    body: "News, thought leadership and case studies — mapped against your key messages so every story earns its place, not just column inches."
+    items:
+      - "Consumer PR & media relations"
+      - "Corporate & B2B communications"
+      - "Issues management & reputation protection"
+      - "Thought leadership & newsjacking"
+      - "Award submissions & accreditation"
+  - n: "02"
+    title: "Owned Media"
+    body: "Your website and social channels, built to work exceedingly hard — for the humans who read them and the AI engines that crawl, cite and recommend them."
+    items:
+      - "GEO-optimised website copy & structure"
+      - "Social media strategy, content & management"
+      - "Structured data & AI-visibility audits"
+      - "Substack / newsletter strategy"
+  - n: "03"
+    title: "In-Person & Community"
+    body: "Real-world moments that generate coverage, goodwill, and the kind of story an algorithm can't manufacture."
+    items:
+      - "Event planning & management"
+      - "Community engagement activity"
+      - "Sponsorships & partnerships"
+      - "Executive visibility & profile-building"
+
+method_eyebrow: "Methodology"
+method_heading: "How an engagement runs."
+method_lede: "Every project starts with a full-immersion session — getting under the skin of your business to draw out key messages, timeline, audiences, and the behaviour we want to change. From there:"
+method:
+  - step: "Audit & assess"
+    body: "We benchmark your current online footprint against your objectives:"
+    items:
+      - "Visibility — are you appearing in the right places?"
+      - "Sentiment — what is your reputation, really?"
+      - "Narrative — what do people (and AI) take away about you?"
+      - "Call-to-action — what do you want them to do next?"
+  - step: "Activate"
+    body: "Your bespoke PR & GEO strategy, delivered by specialists across every discipline it touches — media relations, SEO, awards, social, and community engagement — working from one shared narrative."
+    items: []
+  - step: "Track & adapt"
+    body: "We measure against the original benchmark and your short, medium and long-term goals. Media and AI both move fast — so we stay agile, reviewing and adjusting rather than running a strategy on autopilot."
+    items: []
+
+cta_heading: "Let's map your strategy."
+cta_lede: "Every brief is different. Tell us about yours and we'll tell you honestly whether — and how — we can help."
+cta_button: "Book a strategy call"

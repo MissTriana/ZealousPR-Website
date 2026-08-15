@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('news', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="Company News & Insights"
+  description="Announcements, milestones and insights from Zealous."
+  path="/news/"
+>
+  <section class="section hero-sm">
+    <div class="wrap">
+      <p class="eyebrow">News &amp; Insights</p>
+      <h1>What's happening at Zealous.</h1>
+      <p class="lede">Company announcements, milestones, and the occasional bit of thinking out loud — separate from <a href="/newsletter/">The GEO Nerd</a>, our newsletter.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      {posts.length === 0 ? (
+        <p class="slate">Nothing here yet — check back soon.</p>
+      ) : (
+        <div class="post-list">
+          {posts.map((post) => (
+            <a class="post-row" href={`/news/${post.id}/`}>
+              <p class="post-date folio">
+                {post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+              </p>
+              <div>
+                <h2>{post.data.title}</h2>
+                <p class="slate">{post.data.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-sm { padding-block: clamp(2.5rem, 6vw, 4rem) 1rem; }
+  .hero-sm h1 { margin-block: 0.6rem 1.2rem; max-width: 18ch; }
+  .hero-sm .lede a { color: var(--red); text-decoration: none; border-bottom: 1px solid var(--line); }
+
+  .post-list { display: grid; gap: 0; }
+  .post-row {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    padding-block: 1.75rem;
+    border-top: 1px solid var(--line);
+  }
+  .post-row:last-child { border-bottom: 1px solid var(--line); }
+  .post-row h2 { font-size: 1.4rem; margin-bottom: 0.4rem; transition: color 0.15s ease; }
+  .post-row:hover h2 { color: var(--red); }
+
+  @media (max-width: 640px) {
+    .post-row { grid-template-columns: 1fr; gap: 0.4rem; }
+  }
+</style>

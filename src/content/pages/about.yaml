@@ -1,0 +1,29 @@
+seo_title: "About Zealous & Founder Yasmine Triana"
+seo_description: "Meet Yasmine Triana, founder of Zealous — 16+ years in PR, former Director of a PR Week Top 150 agency and UK rep for the PR Global Network."
+
+hero_eyebrow: "About"
+hero_heading: "PR that's earned its stripes — and its algorithms."
+hero_lede: "Zealous is a creative PR, social media and GEO specialist agency. We believe every piece of earned and owned media — every campaign, post and press release — should work exceedingly hard for your business, anchored by a strategy that complements your actual goals."
+
+founder_eyebrow: "Meet the founder"
+founder_heading: "Hi, I'm Yasmine."
+founder_initials: "YT"
+founder_lede: "Former Director of a PR Week Top 150 agency and UK representative for the PR Global Network (PRGN). Over 16 years, my clients have ranged from one-person startups to global enterprises, across construction, automotive, property & placemaking, B2B technology, personal finance and professional services."
+founder_body_1: "I have a particular interest in products, people and services making a genuine positive impact on their industries, communities or the environment. I invest in really understanding a client — their pain points, ambitions and history — before building a tailored PR and social strategy. There's no cookie-cutter approach for any client I work with."
+founder_body_2: "As a parent, my ambition is to work with clients I believe in — the kind of businesses I'd want my own son to grow up seeing do well."
+
+values_eyebrow: "How we work"
+values_heading: "Quality, over quantity — always."
+values:
+  - label: "Transparent"
+    body: "You always know what we're doing and why it's in the plan."
+  - label: "Proactive"
+    body: "We bring ideas before you have to ask for them."
+  - label: "Agile"
+    body: "The media and AI landscape moves fast. So do we."
+  - label: "Dedicated"
+    body: "Quality over quantity, and completely invested in your mission."
+
+cta_heading: "Let's talk about your business."
+cta_lede: "No cookie-cutter pitch — just a conversation about where you want to be known, and how to get you there."
+cta_button: "Get in touch"

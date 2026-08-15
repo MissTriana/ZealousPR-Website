@@ -18,6 +18,7 @@
   --blue: #5864cc;
   --mint: #8dd8b6;
   --mint-deep: #2f9c6b;
+  --violet: #8859d1;
   --red: #fd6a3b; /* alias kept for existing component references */
   --red-deep: #e04d20;
   --orange: #fabf4a;
@@ -94,15 +95,6 @@ p:last-child { margin-bottom: 0; }
   gap: 0.5em;
 }
 
-.eyebrow::before {
-  content: '';
-  width: 0.5em;
-  height: 0.5em;
-  background: var(--red);
-  border-radius: 50%;
-  flex: none;
-}
-
 .lede {
   font-size: clamp(1.05rem, 1rem + 0.4vw, 1.35rem);
   color: var(--ink-soft);
@@ -162,7 +154,6 @@ p:last-child { margin-bottom: 0; }
 }
 .section-dark .slate { color: #b8b8b8; }
 .section-dark .eyebrow { color: var(--coral); }
-.section-dark .eyebrow::before { background: var(--coral); }
 .section-dim { background: var(--paper-dim); }
 
 .slate { color: var(--slate); }
@@ -178,8 +169,7 @@ p:last-child { margin-bottom: 0; }
 .cta-band.section-dark {
   background: var(--coral);
 }
-.cta-band.section-dark .eyebrow,
-.cta-band.section-dark .eyebrow::before { color: #fff; background: #fff; }
+.cta-band.section-dark .eyebrow { color: #fff; }
 .cta-band.section-dark .slate,
 .cta-band.section-dark .lede { color: #fff0e8 !important; }
 .cta-band.section-dark h2 { color: #fff; }
@@ -209,3 +199,36 @@ a:focus-visible, button:focus-visible {
   border-radius: 0 0 6px 0;
 }
 .skip-link:focus { left: 0; top: 0; }
+
+/* Scroll-reveal: fade + rise, staggered by data-delay. JS toggles
+   .is-visible when an element enters the viewport (see BaseLayout).
+   Falls back to fully visible if JS never runs or motion is reduced. */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: var(--reveal-delay, 0s);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Hover lift for card-style elements */
+.lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px -18px rgba(7, 5, 15, 0.35);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lift:hover { transform: none; }
+}

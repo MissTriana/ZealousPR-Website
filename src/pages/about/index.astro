@@ -1,12 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
 
-const values = [
-  { label: 'Transparent', body: 'You always know what we\u2019re doing and why it\u2019s in the plan.' },
-  { label: 'Proactive', body: 'We bring ideas before you have to ask for them.' },
-  { label: 'Agile', body: 'The media and AI landscape moves fast. So do we.' },
-  { label: 'Dedicated', body: 'Quality over quantity, and completely invested in your mission.' },
-];
+const page = await getEntry('pages', 'about');
+const c = page!.data;
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -22,49 +19,41 @@ const personJsonLd = {
 ---
 
 <BaseLayout
-  title="About Zealous & Founder Yasmine Triana"
-  description="Meet Yasmine Triana, founder of Zealous — 16+ years in PR, former Director of a PR Week Top 150 agency and UK rep for the PR Global Network."
+  title={c.seo_title}
+  description={c.seo_description}
   path="/about/"
   extraJsonLd={[personJsonLd]}
 >
   <section class="section hero-sm">
     <div class="wrap">
-      <p class="eyebrow">About</p>
-      <h1>PR that's earned its stripes — and its algorithms.</h1>
-      <p class="lede">
-        Zealous is a creative PR, social media and GEO specialist agency. We believe every piece of earned and owned media — every campaign, post and press release — should work exceedingly hard for your business, anchored by a strategy that complements your actual goals.
-      </p>
+      <p class="eyebrow">{c.hero_eyebrow}</p>
+      <h1>{c.hero_heading}</h1>
+      <p class="lede">{c.hero_lede}</p>
     </div>
   </section>
 
   <section class="section section-dim founder">
     <div class="wrap founder-grid">
       <div class="founder-photo" role="img" aria-label="Portrait of Yasmine Triana, founder of Zealous">
-        <span>YT</span>
+        <span>{c.founder_initials}</span>
       </div>
-      <div>
-        <p class="eyebrow">Meet the founder</p>
-        <h2>Hi, I'm Yasmine.</h2>
-        <p class="lede">
-          Former Director of a PR Week Top 150 agency and UK representative for the PR Global Network (PRGN). Over 16 years, my clients have ranged from one-person startups to global enterprises, across construction, automotive, property &amp; placemaking, B2B technology, personal finance and professional services.
-        </p>
-        <p class="slate">
-          I have a particular interest in products, people and services making a genuine positive impact on their industries, communities or the environment. I invest in really understanding a client — their pain points, ambitions and history — before building a tailored PR and social strategy. There's no cookie-cutter approach for any client I work with.
-        </p>
-        <p class="slate">
-          As a parent, my ambition is to work with clients I believe in — the kind of businesses I'd want my own son to grow up seeing do well.
-        </p>
+      <div >>
+        <p class="eyebrow">{c.founder_eyebrow}</p>
+        <h2>{c.founder_heading}</h2>
+        <p class="lede">{c.founder_lede}</p>
+        <p class="slate">{c.founder_body_1}</p>
+        <p class="slate">{c.founder_body_2}</p>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <p class="eyebrow">How we work</p>
-      <h2>Quality, over quantity — always.</h2>
+      <p class="eyebrow">{c.values_eyebrow}</p>
+      <h2>{c.values_heading}</h2>
       <div class="values">
-        {values.map((v) => (
-          <div class="value">
+        {c.values.map((v: { label: string; body: string }, i: number) => (
+          <div class="value reveal" data-delay={i * 0.08}>
             <h3>{v.label}</h3>
             <p class="slate">{v.body}</p>
           </div>
@@ -75,9 +64,9 @@ const personJsonLd = {
 
   <section class="section section-dark cta-band">
     <div class="wrap cta-band-inner">
-      <h2>Let's talk about your business.</h2>
-      <p class="lede" style="color:#d9d5c8">No cookie-cutter pitch — just a conversation about where you want to be known, and how to get you there.</p>
-      <a class="btn btn-primary btn-on-dark" href="/contact/">Get in touch</a>
+      <h2>{c.cta_heading}</h2>
+      <p class="lede" style="color:#d9d5c8">{c.cta_lede}</p>
+      <a class="btn btn-primary btn-on-dark" href="/contact/">{c.cta_button}</a>
     </div>
   </section>
 </BaseLayout>
