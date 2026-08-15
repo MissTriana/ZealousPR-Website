@@ -1,9 +1,0 @@
-# PRE-LAUNCH: crawlers are blocked while the site is in preview.
-# When ready to go live, delete the two lines below this comment block
-# and uncomment the three lines beneath them.
-User-agent: *
-Disallow: /
-
-# User-agent: *
-# Allow: /
-# Sitemap: https://www.zealouspr.com/sitemap-index.xml
