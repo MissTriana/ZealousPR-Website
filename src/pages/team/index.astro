@@ -23,11 +23,17 @@ const colors = ['var(--coral)', 'var(--blue)', 'var(--mint-deep)', 'var(--violet
   <section class="section">
     <div class="wrap">
       <div class="team-grid">
-        {c.members.map((m: { name: string; role: string; initials: string; bio: string }, i: number) => (
+        {c.members.map((m: { name: string; role: string; initials: string; bio: string; photo?: string }, i: number) => (
           <article class="team-card lift">
-            <div class="team-photo" style={`background:${colors[i % 4]}`}>
-              <span>{m.initials}</span>
-            </div>
+            {m.photo ? (
+              <div class="team-photo team-photo-img">
+                <img src={m.photo} alt={`Portrait of ${m.name}`} width="400" height="400" />
+              </div>
+            ) : (
+              <div class="team-photo" style={`background:${colors[i % 4]}`}>
+                <span>{m.initials}</span>
+              </div>
+            )}
             <h2>{m.name}</h2>
             <p class="team-role" style={`color:${colors[i % 4]}`}>{m.role}</p>
             <p class="slate">{m.bio}</p>
@@ -69,6 +75,16 @@ const colors = ['var(--coral)', 'var(--blue)', 'var(--mint-deep)', 'var(--violet
     font-family: var(--font-display);
     font-size: 2.5rem;
     color: #fff;
+  }
+  .team-photo-img {
+    background: var(--paper-dim);
+    overflow: hidden;
+  }
+  .team-photo-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .team-card h2 { font-size: 1.4rem; margin-bottom: 0.3rem; }
   .team-role {

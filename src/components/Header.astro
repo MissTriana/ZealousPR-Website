@@ -36,7 +36,9 @@ function groupActive(item: (typeof nav)[number]) {
 
 <header class="masthead">
   <div class="wrap masthead-inner">
-    <a href="/" class="wordmark">Zealous</a>
+    <a href="/" class="brand-lockup">
+      <img src="/logo-mark.svg" alt="Zealous" width="52" height="52" class="brand-icon" />
+    </a>
     <nav aria-label="Primary">
       <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
         <span>Menu</span>
@@ -81,13 +83,24 @@ function groupActive(item: (typeof nav)[number]) {
     justify-content: space-between;
     padding-block: 1.1rem;
   }
+  .brand-lockup {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+  }
+  .brand-icon {
+    display: block;
+    flex: none;
+  }
   .wordmark {
     font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.6rem;
-    letter-spacing: -0.02em;
+    font-weight: 400;
+    font-size: 2.3rem;
+    letter-spacing: -0.01em;
     text-decoration: none;
     color: var(--ink);
+    line-height: 1;
   }
   nav ul {
     list-style: none;
@@ -147,7 +160,7 @@ function groupActive(item: (typeof nav)[number]) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.8rem;
+    gap: 0.35rem;
     margin: 0;
     padding: 1rem 1.1rem;
   }
@@ -166,13 +179,17 @@ function groupActive(item: (typeof nav)[number]) {
     cursor: pointer;
   }
 
-  /* Desktop: submenu becomes a floating dropdown panel */
+  /* Desktop: submenu becomes a floating dropdown panel.
+     top is flush (100%, no gap) with extra breathing room added via
+     padding-top *inside* the box — a gap here would create a dead zone
+     the mouse has to cross, closing the menu before it can be clicked. */
   @media (min-width: 721px) {
     .nav-parent .submenu {
       position: absolute;
-      top: calc(100% + 0.9rem);
+      top: 100%;
       left: 50%;
       transform: translateX(-50%);
+      padding-top: 1.6rem;
       background: var(--paper);
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -209,14 +226,22 @@ function groupActive(item: (typeof nav)[number]) {
     toggle.setAttribute('aria-expanded', String(!!open));
   });
 
-  // Desktop: open a dropdown on hover, close others, and close on outside click.
+  // Desktop: open a dropdown on hover, close others, and close on outside
+  // click. A short delay before closing gives the mouse room to travel
+  // diagonally into the panel without it snapping shut.
   const details = document.querySelectorAll<HTMLDetailsElement>('.nav-parent details');
+  let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
   details.forEach((d) => {
     d.addEventListener('mouseenter', () => {
-      if (window.innerWidth > 720) d.open = true;
+      if (window.innerWidth <= 720) return;
+      clearTimeout(closeTimer);
+      details.forEach((other) => { if (other !== d) other.open = false; });
+      d.open = true;
     });
     d.addEventListener('mouseleave', () => {
-      if (window.innerWidth > 720) d.open = false;
+      if (window.innerWidth <= 720) return;
+      closeTimer = setTimeout(() => { d.open = false; }, 250);
     });
   });
   document.addEventListener('click', (e) => {

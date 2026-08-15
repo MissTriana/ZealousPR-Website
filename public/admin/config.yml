@@ -145,7 +145,8 @@ collections:
           - { label: "Hero — Paragraph", name: "hero_lede", widget: "text" }
           - { label: "Founder — Eyebrow", name: "founder_eyebrow", widget: "string" }
           - { label: "Founder — Heading", name: "founder_heading", widget: "string" }
-          - { label: "Founder — Initials (photo placeholder)", name: "founder_initials", widget: "string" }
+          - { label: "Founder — Photo", name: "founder_photo", widget: "image", required: false, hint: "Upload a real photo — leave blank to show initials instead." }
+          - { label: "Founder — Initials (used if no photo is set)", name: "founder_initials", widget: "string" }
           - { label: "Founder — Intro paragraph", name: "founder_lede", widget: "text" }
           - { label: "Founder — Paragraph 2", name: "founder_body_1", widget: "text" }
           - { label: "Founder — Paragraph 3", name: "founder_body_2", widget: "text" }
@@ -226,7 +227,8 @@ collections:
             fields:
               - { label: "Name", name: "name", widget: "string" }
               - { label: "Role", name: "role", widget: "string" }
-              - { label: "Initials (photo placeholder)", name: "initials", widget: "string" }
+              - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Upload a real photo if you have one — leave blank to show initials instead." }
+              - { label: "Initials (used if no photo is set)", name: "initials", widget: "string" }
               - { label: "Bio", name: "bio", widget: "text" }
           - { label: "Bottom CTA — Heading", name: "cta_heading", widget: "string" }
           - { label: "Bottom CTA — Paragraph", name: "cta_lede", widget: "text" }
@@ -247,3 +249,11 @@ collections:
             fields:
               - { label: "Question", name: "question", widget: "string" }
               - { label: "Answer", name: "answer", widget: "text" }
+
+      - name: "social"
+        label: "Social Links"
+        file: "src/content/pages/social.yaml"
+        fields:
+          - { label: "LinkedIn URL", name: "linkedin_url", widget: "string", required: false, hint: "Leave blank to hide the icon in the footer." }
+          - { label: "Instagram URL", name: "instagram_url", widget: "string", required: false, hint: "Leave blank until the profile exists — the icon only shows once this is filled in." }
+          - { label: "YouTube URL", name: "youtube_url", widget: "string", required: false, hint: "Leave blank until the channel exists — the icon only shows once this is filled in." }
