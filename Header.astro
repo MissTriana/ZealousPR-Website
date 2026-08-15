@@ -1,0 +1,110 @@
+---
+const nav = [
+  { href: '/services/', label: 'Services' },
+  { href: '/about/', label: 'About' },
+  { href: '/case-studies/', label: 'Results' },
+  { href: '/blog/', label: 'The GEO Nerd' },
+  { href: '/contact/', label: 'Contact' },
+];
+const path = Astro.url.pathname;
+---
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a href="/" class="wordmark">Zealous</a>
+    <nav aria-label="Primary">
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span>Menu</span>
+      </button>
+      <ul id="site-nav">
+        {nav.map((item) => (
+          <li>
+            <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .masthead {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .masthead-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1.1rem;
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: clamp(1.1rem, 2vw, 2rem);
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-soft);
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid transparent;
+  }
+  nav a:hover, nav a[aria-current='page'] {
+    color: var(--red);
+    border-bottom-color: var(--red);
+  }
+  .nav-toggle {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: none;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+  }
+
+  @media (max-width: 720px) {
+    .nav-toggle { display: inline-flex; }
+    nav ul {
+      position: absolute;
+      inset-inline: 0;
+      top: 100%;
+      flex-direction: column;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      padding: 1rem var(--gutter) 1.5rem;
+      gap: 0.9rem;
+      display: none;
+    }
+    nav ul.open { display: flex; }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const list = document.getElementById('site-nav');
+  toggle?.addEventListener('click', () => {
+    const open = list?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(!!open));
+  });
+</script>

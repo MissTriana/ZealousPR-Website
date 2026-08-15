@@ -1,0 +1,31 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# After deploying, set this to your live Netlify URL (or leave as-is if using
+# Netlify's own domain / a custom domain pointed at Netlify).
+site_url: https://www.zealouspr.com
+display_url: https://www.zealouspr.com
+logo_url: /favicon.svg
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog — The GEO Nerd"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    identifier_field: title
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", hint: "One or two sentences — shown on the blog list page and used for SEO." }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string", default: "Yasmine Triana" }
+      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, hint: "Turn on to hide this post from the live site until it's ready." }
+      - { label: "Body", name: "body", widget: "markdown" }

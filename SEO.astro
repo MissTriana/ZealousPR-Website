@@ -1,0 +1,64 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  type?: 'website' | 'article';
+  extraJsonLd?: Record<string, any>[];
+}
+
+const { title, description, path = '/', type = 'website', extraJsonLd = [] } = Astro.props;
+const site = Astro.site ?? new URL('https://www.zealouspr.com');
+const canonical = new URL(path, site).toString();
+const fullTitle = title.includes('Zealous') ? title : `${title} — Zealous`;
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${site}#organization`,
+  name: 'Zealous',
+  alternateName: 'Zealous PR',
+  url: site.toString(),
+  description:
+    'Zealous is a creative PR, social media and GEO (Generative Engine Optimisation) specialist agency helping ambitious businesses win visibility with journalists, audiences, and AI search engines alike.',
+  email: 'yasmine.triana@zealouspr.com',
+  areaServed: 'GB',
+  founder: {
+    '@type': 'Person',
+    name: 'Yasmine Triana',
+    jobTitle: 'Founder',
+    sameAs: ['https://www.linkedin.com/in/yasminetriana'],
+  },
+  sameAs: [
+    'https://www.linkedin.com/in/yasminetriana',
+  ],
+  knowsAbout: [
+    'Public Relations',
+    'Generative Engine Optimisation',
+    'GEO',
+    'Social Media Strategy',
+    'Earned Media',
+    'Media Relations',
+  ],
+};
+
+const jsonLdBlocks = [orgJsonLd, ...extraJsonLd];
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content={type} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content="Zealous" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+
+{jsonLdBlocks.map((block) => (
+  <script type="application/ld+json" set:html={JSON.stringify(block)} />
+))}

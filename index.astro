@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const streams = [
+  {
+    n: '01',
+    title: 'Earned Media',
+    body: "News, thought leadership and case studies — mapped against your key messages so every story earns its place, not just column inches.",
+    items: ['Media relations & press office', 'Thought leadership placement', 'Newsjacking & reactive PR', 'Award submissions & accreditation'],
+  },
+  {
+    n: '02',
+    title: 'Owned Media',
+    body: 'Your website and social channels, built to work exceedingly hard — for the humans who read them and the AI engines that crawl, cite and recommend them.',
+    items: ['GEO-optimised website copy & structure', 'Social media strategy & content', 'Structured data & AI-visibility audits', 'Substack / newsletter strategy'],
+  },
+  {
+    n: '03',
+    title: 'In-Person & Community',
+    body: 'Real-world moments that generate coverage, goodwill, and the kind of story an algorithm can\u2019t manufacture.',
+    items: ['Event planning & management', 'Community engagement activity', 'Sponsorships & partnerships', 'Executive visibility & profile-building'],
+  },
+];
+
+const method = [
+  {
+    step: 'Audit & assess',
+    body: 'We benchmark your current online footprint against your objectives:',
+    items: ['Visibility — are you appearing in the right places?', 'Sentiment — what is your reputation, really?', 'Narrative — what do people (and AI) take away about you?', 'Call-to-action — what do you want them to do next?'],
+  },
+  {
+    step: 'Activate',
+    body: 'Your bespoke PR & GEO strategy, delivered by specialists across every discipline it touches — media relations, SEO, awards, social, and community engagement — working from one shared narrative.',
+    items: [],
+  },
+  {
+    step: 'Track & adapt',
+    body: "We measure against the original benchmark and your short, medium and long-term goals. Media and AI both move fast — so we stay agile, reviewing and adjusting rather than running a strategy on autopilot.",
+    items: [],
+  },
+];
+---
+
+<BaseLayout
+  title="Services — Earned, Owned & GEO Strategy"
+  description="PR, social and GEO services from Zealous: earned media, owned media optimised for AI visibility, accolades, and a clear audit-activate-track methodology."
+  path="/services/"
+>
+  <section class="section hero-sm">
+    <div class="wrap">
+      <p class="eyebrow">Services</p>
+      <h1>PR &amp; GEO, built as one strategy.</h1>
+      <p class="lede">
+        PR and GEO are fundamentally about advocacy. The goal hasn't changed — you're still winning hearts and minds. What's changed is that some of those minds are now artificial, and they're increasingly the ones making the recommendation. We plan for both from day one.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap streams">
+      {streams.map((s) => (
+        <article class="stream">
+          <p class="folio">{s.n}</p>
+          <h2>{s.title}</h2>
+          <p class="slate stream-body">{s.body}</p>
+          {s.items.length > 0 && (
+            <ul class="stream-list">
+              {s.items.map((it) => <li>{it}</li>)}
+            </ul>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-dim">
+    <div class="wrap">
+      <p class="eyebrow">Methodology</p>
+      <h2>How an engagement runs.</h2>
+      <p class="lede">Every project starts with a full-immersion session — getting under the skin of your business to draw out key messages, timeline, audiences, and the behaviour we want to change. From there:</p>
+
+      <div class="method-grid">
+        {method.map((m, i) => (
+          <div class="method-card">
+            <p class="folio">Step {i + 1}</p>
+            <h3>{m.step}</h3>
+            <p class="slate">{m.body}</p>
+            {m.items.length > 0 && (
+              <ul class="method-list slate">
+                {m.items.map((it) => <li>{it}</li>)}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark cta-band">
+    <div class="wrap cta-band-inner">
+      <h2>Let's map your strategy.</h2>
+      <p class="lede" style="color:#d9d5c8">Every brief is different. Tell us about yours and we'll tell you honestly whether — and how — we can help.</p>
+      <a class="btn btn-primary btn-on-dark" href="/contact/">Book a strategy call</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-sm { padding-block: clamp(2.5rem, 6vw, 4rem) 1rem; }
+  .hero-sm h1 { margin-block: 0.6rem 1.2rem; max-width: 18ch; }
+
+  .streams { display: grid; gap: clamp(2.5rem, 5vw, 4rem); }
+  .stream { display: grid; grid-template-columns: 5rem 1fr; gap: 1.5rem; border-top: 1px solid var(--line); padding-top: 2rem; }
+  .stream:first-child { border-top: none; padding-top: 0; }
+  .stream h2 { margin-bottom: 0.75rem; }
+  .stream-body { max-width: 56ch; }
+  .stream-list { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-soft); }
+  .stream-list li::before { content: '— '; color: var(--red); }
+
+  .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2.5rem; }
+  .method-card { background: var(--paper); border-radius: 4px; padding: 1.75rem; }
+  .method-card h3 { margin: 0.4rem 0 0.75rem; }
+  .method-list { margin: 1rem 0 0; padding-left: 1.1rem; display: grid; gap: 0.4rem; font-size: 0.92rem; }
+
+  .cta-band-inner { text-align: center; display: grid; gap: 1.5rem; justify-items: center; max-width: 50ch; margin-inline: auto; }
+
+  @media (max-width: 900px) {
+    .stream { grid-template-columns: 1fr; }
+    .method-grid { grid-template-columns: 1fr; }
+  }
+</style>

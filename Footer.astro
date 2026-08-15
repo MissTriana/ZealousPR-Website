@@ -1,0 +1,68 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <p class="wordmark">Zealous</p>
+      <p class="slate">Creative PR &amp; GEO specialists.<br />Winning hearts, minds, and algorithms.</p>
+    </div>
+
+    <div class="footer-col">
+      <p class="eyebrow">Say hello</p>
+      <p><a href="mailto:yasmine.triana@zealouspr.com">yasmine.triana@zealouspr.com</a></p>
+      <p><a href="tel:+447496928736">07496 928736</a></p>
+    </div>
+
+    <div class="footer-col">
+      <p class="eyebrow">Elsewhere</p>
+      <p><a href="https://www.linkedin.com/in/yasminetriana" target="_blank" rel="noopener">LinkedIn</a></p>
+      <p><a href="/blog/">The GEO Nerd — our Substack &amp; blog</a></p>
+    </div>
+
+    <div class="footer-col">
+      <p class="eyebrow">Site</p>
+      <p><a href="/services/">Services</a></p>
+      <p><a href="/about/">About</a></p>
+      <p><a href="/contact/">Contact</a></p>
+    </div>
+  </div>
+  <div class="wrap footer-legal">
+    <hr class="rule" />
+    <p class="slate">© {year} Zealous PR. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding-block: clamp(3rem, 6vw, 5rem) 2rem;
+  }
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+  }
+  .footer-brand .wordmark {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 0.6rem;
+  }
+  .footer-col p { margin: 0 0 0.5rem; }
+  .footer-col a { text-decoration: none; }
+  .footer-col a:hover { color: var(--red); }
+  .site-footer .slate { color: #a8a496; }
+  .footer-legal { margin-top: 2.5rem; }
+  .footer-legal .rule { border-top-color: #3a372e; margin-bottom: 1rem; }
+  .footer-legal p { font-size: 0.85rem; }
+
+  @media (max-width: 780px) {
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .footer-inner { grid-template-columns: 1fr; }
+  }
+</style>
