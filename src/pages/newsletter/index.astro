@@ -12,7 +12,7 @@ const posts = await getSubstackPosts();
 >
   <section class="section hero-sm">
     <div class="wrap">
-      <img src="/geo-nerd-logo.svg" alt="The GEO Nerd — Est. 2026" width="280" height="219" class="newsletter-logo" />
+      <img src="/geo-nerd-banner.svg" alt="The GEO Nerd — Est. 2026" width="700" height="262" class="newsletter-banner" />
       <h1>Notes on PR &amp; the age of AI search.</h1>
       <p class="lede">Field notes, frameworks and the occasional rant, from the desk of Zealous — written on Substack, mirrored here.</p>
     </div>
@@ -42,9 +42,15 @@ const posts = await getSubstackPosts();
 </BaseLayout>
 
 <style>
-  .hero-sm { padding-block: clamp(2.5rem, 6vw, 4rem) 1rem; }
-  .newsletter-logo { display: block; width: min(280px, 60vw); height: auto; margin-bottom: 1.5rem; }
-  .hero-sm h1 { margin-block: 0.6rem 1.2rem; max-width: 18ch; }
+  .hero-sm { padding-block: clamp(1.5rem, 3vw, 2.5rem) 1rem; text-align: center; }
+  .newsletter-banner {
+    display: block;
+    width: min(700px, 100%);
+    height: auto;
+    margin: 0 auto 1.75rem;
+  }
+  .hero-sm h1 { margin: 0.6rem auto 1.2rem; max-width: 24ch; }
+  .hero-sm .lede { margin-inline: auto; max-width: 46ch; }
 
   .post-list { display: grid; gap: 0; }
   .post-row {

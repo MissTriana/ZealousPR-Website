@@ -30,9 +30,20 @@ const { title, description, path, type, extraJsonLd, canonicalOverride } = Astro
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      /* Norwester — the logo's own typeface, self-hosted since it isn't
+         on Google Fonts. Single weight (400) is all that exists. */
+      @font-face {
+        font-family: 'Norwester';
+        src: url('/fonts/norwester-latin-400-normal.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
     <SEO title={title} description={description} path={path} type={type} extraJsonLd={extraJsonLd} canonicalOverride={canonicalOverride} />
     <noscript>
       <style>.reveal { opacity: 1 !important; transform: none !important; }</style>

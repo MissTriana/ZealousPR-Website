@@ -25,10 +25,14 @@
   --slate: #5c5c5c;
   --line: #e2e1dc;
 
-  /* Type — matches the deck: League Gothic display, Poppins body */
-  --font-display: 'League Gothic', 'Oswald', 'Arial Narrow', sans-serif;
+  /* Type — 2-font system: Norwester (the logo's own typeface) for
+     display/headlines, Poppins for everything else, including the
+     small data-style labels that used to be a third (mono) typeface —
+     those now get their distinct look from weight + letter-spacing
+     on Poppins instead of a separate font. */
+  --font-display: 'Norwester', 'Oswald', 'Arial Narrow', sans-serif;
   --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  --font-mono: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Scale */
   --step-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
@@ -86,6 +90,7 @@ p:last-child { margin-bottom: 0; }
 
 .eyebrow {
   font-family: var(--font-mono);
+  font-weight: 600;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -112,6 +117,7 @@ p:last-child { margin-bottom: 0; }
 /* Buttons */
 .btn {
   font-family: var(--font-mono);
+  font-weight: 600;
   font-size: 0.8rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -177,6 +183,7 @@ p:last-child { margin-bottom: 0; }
 /* Folio numerals (magazine page-number styling used for structural counts only) */
 .folio {
   font-family: var(--font-mono);
+  font-weight: 600;
   font-size: 0.85rem;
   color: var(--red);
 }
